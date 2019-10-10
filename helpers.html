@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Bee Cause | Concerned Community</title>
+		<meta name="description" content="Ideas for revealing content in a schematic box look." />
+		<meta name="keywords" content="javascript, plugin, reveal, effect, demo, web development, web design, template" />
+		<meta name="author" content="Codrops" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700|Poppins:700" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/revealer.css" />
+		<link rel="stylesheet" type="text/css" href="css/pater.css" />
+		<script>document.documentElement.className = 'js';</script>
+	</head>
+	<body class="demo-split loading">
+		<main>
+			<section class="content content--full flexy intro">
+				<header class="compo_header">
+					<div class="links">
+					 <img src="img/bee_logo2.png" alt="Bee Cause logo">
+					</div>
+					<nav class="demos">
+						<a class="demo" href="index.html">Menu</a>
+						<a class="demo" href="pollination.html">Pollination</a>
+						<a class="demo" href="anatomy.html">Anatomy</a>
+						<a class="demo" href="species.html">Species</a>
+						<a class="demo" href="helpers.html">Helpers</a>
+					</nav>
+				</header>
+				<h2 class="content__title content__title--center">
+					<div id="rev-1" class="content__title__inner">lets save</div><br/>
+					<div id="rev-2" class="content__title__inner content__title__inner--offset-1">the bees</div>
+				</h2>
+			</section>
+			<section class="content">
+				<div class="dual">
+					<div class="dual__inner" id="rev-1">
+						<div class="dual__half"></div>
+					</div>
+					<div class="dual__content">
+						Si les abeilles disparaissent de la surface du globe, l'homme n'aurait plus que quatre années à vivre.<span class="author">― Albert Einstein, 1948</span>
+					</div>
+				</div>
+			</section>
+			<section class="content flexy flexy--center">
+				<div class="media">
+					<div id="rev-2" class="media__inner"><img class="media__image" src="img/5.jpg" alt="Image" /></div>
+					<div class="media__toolbar">
+						<button class="btn btn--tool"><svg class="icon icon--heart"><use xlink:href="#icon-heart"></use></svg></button>
+						<button class="btn btn--tool"><svg class="icon icon--comment"><use xlink:href="#icon-comment"></use></svg></button>
+						<button class="btn btn--tool"><svg class="icon icon--download"><use xlink:href="#icon-download"></use></svg></button>
+					</div>
+				</div>
+			</section>
+			<!-- Related demos -->
+			<section class="content content--related">
+				<h2>If you enjoyed this demo you might also like:</h2>
+				<a class="media-item" href="https://tympanus.net/Tutorials/PageRevealEffects/">
+					<img class="media-item__img" src="img/related/PageRevealEffects.png">
+					<h3 class="media-item__title">Multi-Layer Page Reveal Effects</h3>
+				</a>
+				<a class="media-item" href="https://tympanus.net/Development/ImageGridEffects/">
+					<img class="media-item__img" src="img/related/ImageGridEffects.png">
+					<h3 class="media-item__title">Image Grid Effects</h3>
+				</a>
+			</section>
+		</main>
+		<script src="js/anime.min.js"></script>
+		<script src="js/scrollMonitor.js"></script>
+		<script src="js/main.js"></script>
+		<script>
+		(function() {
+			// Fake loading.
+			setTimeout(init, 1000);
+
+			function init() {
+				document.body.classList.remove('loading');
+
+				var splitContent = document.querySelector('.dual__content'),
+					rev1 = new RevealFx(document.querySelector('#rev-1'), {
+						revealSettings : {
+							bgcolor: '#2d2c2c',
+							direction: 'rl',
+							duration: 800,
+							easing: 'easeInOutCirc',
+							coverArea: 50,
+							onCover: function(contentEl, revealerEl) {
+								contentEl.style.opacity = 1;
+								splitContent.classList.add('dual__content--show');
+							}
+						}
+					});
+
+				rev1.reveal();
+
+				var scrollElemToWatch = document.getElementById('rev-2'),
+					watcher = scrollMonitor.create(scrollElemToWatch, -300),
+					mediaToolbar = document.querySelector('.media__toolbar'),
+					rev2 = new RevealFx(scrollElemToWatch, {
+						revealSettings : {
+							bgcolor: '#2d2c2c',
+							duration: 800,
+							easing: 'easeInOutCirc',
+							coverArea: 12.5,
+							onCover: function(contentEl, revealerEl) {
+								contentEl.style.opacity = 1;
+								mediaToolbar.classList.add('media__toolbar--show');
+							}
+						}
+					});
+
+				watcher.enterViewport(function() {
+					rev2.reveal();
+					watcher.destroy();
+				});
+			}
+		})();
+		</script>
+	</body>
+</html>
