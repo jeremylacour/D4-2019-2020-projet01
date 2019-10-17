@@ -15,7 +15,6 @@
 		<link rel="stylesheet" type="text/css" href="css/revealer.css" />
 		<script>document.documentElement.className = 'js';</script>
 	</head>
-	<body class="demo-overview loading">
 		<main>
 			<section class="content content--full flexy intro">
 				<header class="compo_header">
@@ -31,62 +30,64 @@
 					</nav>
 					<button class="btn btn--menu"><svg class="icon icon--menu"><use xlink:href="#icon-menu"></use></svg></button>
 				</header>
-			<section class="content flexy flexy--center">
-				<p class="content__heading content__heading--center"><strong>Click the menu icon &#8599;</strong></p>
+    <body>
+				<h2 class="content__title content__title--center">
+					<div id="rev-1" class="content__title__inner">learn about</div><br/>
+					<div id="rev-2" class="content__title__inner content__title__inner--offset-1">pollination</div>
+				</h2>
 			</section>
-			<nav class="menu">
-				<button class="btn btn--close"><svg class="icon icon--cross"><use xlink:href="#icon-cross"></use></svg></button>
-				<ul class="menu__inner">
-					<li class="menu__item"><a class="menu__link" href="https://fr.wikipedia.org/wiki/Abeille">Wiki</a></li>
-					<li class="menu__item"><a class="menu__link" href="https://wildbieneundpartner.ch/">Biene</a></li>
-					<li class="menu__item"><a class="menu__link" href="https://www.pollinis.org/">Pollinis</a></li>
-					<li class="menu__item"><a class="menu__link" href="https://beehome.net/fr/">Beehome</a></li>
-				</ul>
-			</nav>
-			<!-- Related demos -->
-			<section class="content content--related">
-<!-- Contenu -->
+			<section class="content content--full flexy flexy--row">
+				<h2 class="content__title content__title--medium content__title--half content__title--right">
+				</h2>
+				<div id="rev-3" class="content__image-wrap content__image-wrap--half">
+					<img class="content__image" src="img/abeille_dessin.jpg" alt="Some image"/>
+				</div>
 			</section>
-		</main>
-		<script src="js/anime.min.js"></script>
-		<script src="js/main.js"></script>
-		<script>
-		(function() {
-			var navEl = document.querySelector('nav.menu'),
-				revealer = new RevealFx(navEl),
-				closeCtrl = navEl.querySelector('.btn--close');
+			<section class="content content--full flexy flexy--row">
+				<div class="video_pollination">
+					<video src="video/pollination.mp4" autoplay poster="posterimage.jpg">
+				</video>
+			</section>
+	 </body>
+  </main>
+	<script src="js/anime.min.js"></script>
+	<script src="js/main.js"></script>
+	<script>
+	(function() {
+		var navEl = document.querySelector('nav.menu'),
+			revealer = new RevealFx(navEl),
+			closeCtrl = navEl.querySelector('.btn--close');
 
-			document.querySelector('.btn--menu').addEventListener('click', function() {
-				revealer.reveal({
-					bgcolor: '#000',
-					duration: 400,
-					easing: 'easeInOutCubic',
-					onCover: function(contentEl, revealerEl) {
-						navEl.classList.add('menu--open');
-						contentEl.style.opacity = 1;
-					},
-					onComplete: function() {
-						closeCtrl.addEventListener('click', closeMenu);
-					}
-				});
+		document.querySelector('.btn--menu').addEventListener('click', function() {
+			revealer.reveal({
+				bgcolor: '#000',
+				duration: 400,
+				easing: 'easeInOutCubic',
+				onCover: function(contentEl, revealerEl) {
+					navEl.classList.add('menu--open');
+					contentEl.style.opacity = 1;
+				},
+				onComplete: function() {
+					closeCtrl.addEventListener('click', closeMenu);
+				}
 			});
+		});
 
-			function closeMenu() {
-				closeCtrl.removeEventListener('click', closeMenu);
-				navEl.classList.remove('menu--open');
-				revealer.reveal({
-					bgcolor: '#000',
-					duration: 400,
-					easing: 'easeInOutCubic',
-					onCover: function(contentEl, revealerEl) {
-						navEl.classList.remove('menu--open');
-						contentEl.style.opacity = 0;
-					}
-				});
-			}
-		})();
-		</script>
-	</body>
+		function closeMenu() {
+			closeCtrl.removeEventListener('click', closeMenu);
+			navEl.classList.remove('menu--open');
+			revealer.reveal({
+				bgcolor: '#000',
+				duration: 400,
+				easing: 'easeInOutCubic',
+				onCover: function(contentEl, revealerEl) {
+					navEl.classList.remove('menu--open');
+					contentEl.style.opacity = 0;
+				}
+			});
+		}
+	})();
+	</script>
 	<footer>
 		<nav>
 			<ul>

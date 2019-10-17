@@ -809,6 +809,13 @@ a:focus {
 	}
 }
 
+.video_pollination{
+	width: 200%;
+	display: block;
+	justify-content: center;
+	align-items: center;
+}
+
 footer{
   background: #ffdc00;
   min-height: 10vh;

@@ -13,10 +13,9 @@
 		<link rel="stylesheet" type="text/css" href="css/normalize.css" />
 		<link rel="stylesheet" type="text/css" href="css/demo.css" />
 		<link rel="stylesheet" type="text/css" href="css/revealer.css" />
-		<link rel="stylesheet" type="text/css" href="css/pater.css" />
 		<script>document.documentElement.className = 'js';</script>
 	</head>
-	<body class="demo-split loading">
+	<body class="demo-menu">
 		<main>
 			<section class="content content--full flexy intro">
 				<header class="compo_header">
@@ -30,95 +29,73 @@
 						<a class="demo" href="species.html">Species</a>
 						<a class="demo" href="helpers.html">Helpers</a>
 					</nav>
+					<button class="btn btn--menu"><svg class="icon icon--menu"><use xlink:href="#icon-menu"></use></svg></button>
 				</header>
-				<h2 class="content__title content__title--center">
-					<div id="rev-1" class="content__title__inner">lets save</div><br/>
-					<div id="rev-2" class="content__title__inner content__title__inner--offset-1">the bees</div>
-				</h2>
-			</section>
-			<section class="content">
-				<div class="dual">
-					<div class="dual__inner" id="rev-1">
-						<div class="dual__half"></div>
-					</div>
-					<div class="dual__content">
-						Si les abeilles disparaissent de la surface du globe, l'homme n'aurait plus que quatre années à vivre.<span class="author">― Albert Einstein, 1948</span>
-					</div>
-				</div>
-			</section>
 			<section class="content flexy flexy--center">
-				<div class="media">
-					<div id="rev-2" class="media__inner"><img class="media__image" src="img/5.jpg" alt="Image" /></div>
-					<div class="media__toolbar">
-						<button class="btn btn--tool"><svg class="icon icon--heart"><use xlink:href="#icon-heart"></use></svg></button>
-						<button class="btn btn--tool"><svg class="icon icon--comment"><use xlink:href="#icon-comment"></use></svg></button>
-						<button class="btn btn--tool"><svg class="icon icon--download"><use xlink:href="#icon-download"></use></svg></button>
-					</div>
-				</div>
+				<p class="content__heading content__heading--center"><strong>Click the menu icon &#8599;</strong></p>
 			</section>
+			<nav class="menu">
+				<button class="btn btn--close"><svg class="icon icon--cross"><use xlink:href="#icon-cross"></use></svg></button>
+				<ul class="menu__inner">
+					<li class="menu__item"><a class="menu__link" href="https://fr.wikipedia.org/wiki/Abeille">Wiki</a></li>
+					<li class="menu__item"><a class="menu__link" href="https://wildbieneundpartner.ch/">Biene</a></li>
+					<li class="menu__item"><a class="menu__link" href="https://www.pollinis.org/">Pollinis</a></li>
+					<li class="menu__item"><a class="menu__link" href="https://beehome.net/fr/">Beehome</a></li>
+				</ul>
+			</nav>
 			<!-- Related demos -->
 			<section class="content content--related">
-				<h2>If you enjoyed this demo you might also like:</h2>
-				<a class="media-item" href="https://tympanus.net/Tutorials/PageRevealEffects/">
-					<img class="media-item__img" src="img/related/PageRevealEffects.png">
-					<h3 class="media-item__title">Multi-Layer Page Reveal Effects</h3>
-				</a>
-				<a class="media-item" href="https://tympanus.net/Development/ImageGridEffects/">
-					<img class="media-item__img" src="img/related/ImageGridEffects.png">
-					<h3 class="media-item__title">Image Grid Effects</h3>
-				</a>
+<!-- Contenu -->
 			</section>
 		</main>
 		<script src="js/anime.min.js"></script>
-		<script src="js/scrollMonitor.js"></script>
 		<script src="js/main.js"></script>
 		<script>
 		(function() {
-			// Fake loading.
-			setTimeout(init, 1000);
+			var navEl = document.querySelector('nav.menu'),
+				revealer = new RevealFx(navEl),
+				closeCtrl = navEl.querySelector('.btn--close');
 
-			function init() {
-				document.body.classList.remove('loading');
+			document.querySelector('.btn--menu').addEventListener('click', function() {
+				revealer.reveal({
+					bgcolor: '#000',
+					duration: 400,
+					easing: 'easeInOutCubic',
+					onCover: function(contentEl, revealerEl) {
+						navEl.classList.add('menu--open');
+						contentEl.style.opacity = 1;
+					},
+					onComplete: function() {
+						closeCtrl.addEventListener('click', closeMenu);
+					}
+				});
+			});
 
-				var splitContent = document.querySelector('.dual__content'),
-					rev1 = new RevealFx(document.querySelector('#rev-1'), {
-						revealSettings : {
-							bgcolor: '#2d2c2c',
-							direction: 'rl',
-							duration: 800,
-							easing: 'easeInOutCirc',
-							coverArea: 50,
-							onCover: function(contentEl, revealerEl) {
-								contentEl.style.opacity = 1;
-								splitContent.classList.add('dual__content--show');
-							}
-						}
-					});
-
-				rev1.reveal();
-
-				var scrollElemToWatch = document.getElementById('rev-2'),
-					watcher = scrollMonitor.create(scrollElemToWatch, -300),
-					mediaToolbar = document.querySelector('.media__toolbar'),
-					rev2 = new RevealFx(scrollElemToWatch, {
-						revealSettings : {
-							bgcolor: '#2d2c2c',
-							duration: 800,
-							easing: 'easeInOutCirc',
-							coverArea: 12.5,
-							onCover: function(contentEl, revealerEl) {
-								contentEl.style.opacity = 1;
-								mediaToolbar.classList.add('media__toolbar--show');
-							}
-						}
-					});
-
-				watcher.enterViewport(function() {
-					rev2.reveal();
-					watcher.destroy();
+			function closeMenu() {
+				closeCtrl.removeEventListener('click', closeMenu);
+				navEl.classList.remove('menu--open');
+				revealer.reveal({
+					bgcolor: '#000',
+					duration: 400,
+					easing: 'easeInOutCubic',
+					onCover: function(contentEl, revealerEl) {
+						navEl.classList.remove('menu--open');
+						contentEl.style.opacity = 0;
+					}
 				});
 			}
 		})();
 		</script>
 	</body>
+	<footer>
+		<nav>
+			<ul>
+				<a class="demo" href="index.html">Menu</a>
+				<a class="demo" href="pollination.html">Pollination</a>
+				<a class="demo" href="anatomy.html">Anatomy</a>
+				<a class="demo" href="species.html">Species</a>
+				<a class="demo" href="helpers.html">Helpers</a>
+			</ul>
+		</nav>
+	</footer>
 </html>
